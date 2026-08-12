@@ -149,13 +149,10 @@ export function run(sql, params = []) {
 
 export function transaction(fn) {
   try {
-    db.run('BEGIN');
     const result = fn();
-    db.run('COMMIT');
     persist();
     return result;
   } catch (err) {
-    db.run('ROLLBACK');
     throw err;
   }
 }
